@@ -7,7 +7,7 @@ from pathlib import Path
 DEBUG = False
 
 # Allow only your production domain(s)
-ALLOWED_HOSTS = ["your-app-name.onrender.com", "yourdomain.com"]
+ALLOWED_HOSTS = ["https://eco-van.onrender.com/"]
 
 # Secret key from environment variable
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "fallback-secret-if-not-set")
