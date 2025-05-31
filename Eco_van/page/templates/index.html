@@ -1,0 +1,211 @@
+{% load static %}
+{% load humanize %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Support Living Hope Charitable Trust Tirunelveli in their mission to rescue and support vulnerable populations with the ECCO Van project." />
+  <title>Living Hope Charitable Trust Tirunelveli - Donate Now</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Wheels of Change</h1>
+      <p>Support Our ECCO Van Initiative </p>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="{% url 'admin_login' %}">Admin Dashboard</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section id="hero">
+    <div class="container">
+      <h2>Wheels of Change: Support Our ECCO Van Initiative</h2>
+      <p>Help us bring rescue, food, and medical support to those who need it most across Tirunelveli, Tamil Nadu, and Puducherry.</p>
+      <a href="#donate" class="cta-button">Donate Now</a>
+    </div>
+  </section>
+
+  <section id="mission" class="section">
+    <div class="container">
+      <h2>Our Mission</h2>
+      <p>
+        Living Hope Charitable Trust Tirunelveli is dedicated to uplifting the lives of the most vulnerable: the orphaned, elderly, and mentally ill individuals living on the streets. Through our eco-van project, we aim to deliver food, provide medical aid, and rescue those in need—while respecting human dignity and promoting sustainability.
+      </p>
+    </div>
+  </section>
+
+  <section id="services" class="section">
+    <div class="container">
+        {% comment %} <img src="image/eco3.png" alt="Eco-Van Services " class="img_eco"> {% endcomment %}
+        <img src="{% static 'css/image/eco3.png' %}" alt="Eco-Van Services " class="img_eco">
+      <h2>Eco-Van Services</h2>
+      <ul>
+        <li>Rescue of orphaned, elderly, and mentally ill individuals</li>
+        <li>Dignified hospital transport and medical assistance</li>
+        <li>Daily food distribution to over 300 people monthly</li>
+        <li>Monthly "Fight Against Hunger" initiatives for 400+ individuals</li>
+        <li>Mobile medical camps, awareness campaigns, cancer medicine support</li>
+        <li>Mini ambulance services and emergency care</li>
+        <li>Family reunification and long-term welfare integration</li>
+      </ul>
+    </div>
+  </section>
+
+    <section href="process" class="section">
+        
+        <div class="container">
+            <h2>Our Impact</h2>
+            <p>
+            Every month, our volunteers serve over 300 meals, assist in hospital transports, and reunite families.
+            The ECCO van will multiply our reach across districts, including rural and urban Tirunelveli, and extend into Tamil Nadu and Puducherry.
+            </p>
+            <div class="progress-container">
+              <label for="funds">
+                Fundraising Progress: ₹{{ raised|intcomma }} / ₹{{ goal|intcomma }}
+              </label>
+
+              <div class="progress-bar-wrapper">
+                <img id="van-icon" src="{% static 'css/image/eco3.png' %}" alt="Van" />
+                <progress id="funds" value="0" max="{{ goal }}" data-target="{{ raised }}"></progress>
+                {% comment %} <progress id="funds" value="0" max="{{ goal }}" data-target="{{ raised }}"></progress> {% endcomment %}
+              </div>
+            </div>
+
+        </div>
+    </section>
+    
+
+
+
+  <section id="donate" class="section">
+    <div class="container">
+      <h2>Make a Difference</h2>
+      <p>Every rupee helps us rescue a life and deliver hope. Contribute now to drive change with our ECCO van.</p>
+      <form>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required />
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required />
+
+        <label for="amount">Donation Amount (₹)</label>
+        <input type="number" id="amount" name="amount" min="1" required />
+
+        <button type="submit" class="cta-button">Donate Securely</button>
+      </form>
+    </div>
+  </section>
+
+  <section id="testimonials" class="section">
+    <div class="container">
+      <h2>Stories of Hope</h2>
+      <blockquote>
+        "Thanks to Living Hope, my father received urgent medical care when we had no one else to turn to. The kindness and respect shown meant everything to us." – Anjali, Tirunelveli
+      </blockquote>
+      <blockquote>
+        "I was alone on the streets for years. The team helped me reunite with my sister and now I’m receiving regular care." – Ramesh, Madurai
+      </blockquote>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Living Hope Charitable Trust Tirunelveli. All rights reserved.</p>
+      <p>Contact us: +91-98765-43210 | livinghopetrust@gmail.com</p>
+      <p><a href="#">Privacy Policy</a> | <a href="#">Terms & Conditions</a></p>
+    </div>
+  </footer>
+
+
+  <script>
+document.addEventListener("DOMContentLoaded", function () {
+  const progressBar = document.getElementById("funds");
+  const target = parseInt(progressBar.getAttribute("data-target")) || 0;
+  const max = parseInt(progressBar.getAttribute("max")) || 100;
+  const van = document.getElementById("van-icon");
+  const wrapper = document.querySelector(".progress-bar-wrapper");
+
+  let animated = false;
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !animated) {
+        animated = true;
+
+        let current = 0;
+        const speed = Math.ceil(target / 100);
+
+        function animate() {
+          if (current < target) {
+            current += speed;
+            if (current > target) current = target;
+
+            progressBar.value = current;
+
+            // Calculate percentage of progress
+            const percent = current / max;
+
+            // Calculate new van position relative to progress bar width
+            const wrapperWidth = wrapper.offsetWidth;
+            const vanWidth = van.offsetWidth;
+            const leftPosition = percent * (wrapperWidth - vanWidth);
+            van.style.left = `${leftPosition}px`;
+
+            requestAnimationFrame(animate);
+          }
+        }
+
+        animate();
+        observer.unobserve(progressBar);
+      }
+    });
+  }, {
+    threshold: 0.6
+  });
+
+  observer.observe(progressBar);
+});
+</script>
+
+
+
+<script>
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const hamburger = document.querySelector('.hamburger');
+    const nav = document.querySelector('nav ul');
+    
+    hamburger.addEventListener('click', function() {
+      this.classList.toggle('active');
+      nav.classList.toggle('show');
+    });
+  });
+
+</script>
+
+
+
+
+
+
+
+  
+
+</body>
+</html>
