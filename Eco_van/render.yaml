@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: eco-van
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn Eco_van.wsgi:application"
+    envVars:
+      - key: SECRET_KEY = "django-insecure-akt-^-ci4r+2v%tc@f2m^4%-0thb817+i83f_)hdms_vr$g&+)"
+        generateValue: true
+      - key: DEBUG
+        value: "False"
