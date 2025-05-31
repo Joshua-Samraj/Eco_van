@@ -10,7 +10,7 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "unsafe-secret-key")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ["your-render-service-name.onrender.com"]  # Replace with your Render app domain
+ALLOWED_HOSTS = ["https://eco-van.onrender.com/"]  # Replace with your Render app domain
 
 # Application definition
 INSTALLED_APPS = [
