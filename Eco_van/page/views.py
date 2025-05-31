@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 import os
+from django.conf import settings
 # Create your views here.
 
 def index(request):
@@ -47,8 +48,10 @@ def admin_dashboard(request):
     if not request.session.get('admin_logged_in'):
         return redirect('admin_login')
 
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    fund_file = os.path.join(base_dir, 'fund.txt')
+    
+
+    fund_file = os.path.join(settings.BASE_DIR, 'fund.txt')  # safer if used with write permissions
+
 
     fund_data = {'raised': 0, 'goal': 1}
 
